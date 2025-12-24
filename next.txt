@@ -1,0 +1,9 @@
+        <div class = "full-body">
+           <span class = "main title"> ROCK-PAPER-SCISSORS Game<span> 
+
+           <div class = "playbox">
+                <span class = "playbox-title">Your current game:</span>
+                <span class = "info" id="info_player"></span>
+           </div>
+           <span class = "footer"> by Lorenzo Cane</span>
+        </div> 
