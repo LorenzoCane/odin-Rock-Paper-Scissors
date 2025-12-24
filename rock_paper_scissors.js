@@ -67,8 +67,8 @@ function playFullGame(){
     let drawn = 0 ;
 
     for (let i = 0; i < 5; i++) {
-        let humanchoice = getHumanChoice();
-        let computerChoice = getComputerChoice(); 
+        const humanchoice = getHumanChoice();
+        const computerChoice = getComputerChoice(); 
 
         log("--------------------------------------------------");
         log("Round #" + (i+1))
