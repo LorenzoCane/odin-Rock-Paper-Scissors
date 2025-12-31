@@ -12,6 +12,22 @@ const rules = {
     "scissors-rock": "You Lose! Rock beats Scissors",
 };
 
+let humanWin = 0;
+let computerWin = 0;
+let drawn = 0 ;
+let round = 0; 
+
+
+//Buttons
+const buttonContainer =  document.querySelector(".buttonsContainer")
+const buttons = document.querySelectorAll("button");
+//Results box
+const resultsBox = document.querySelector(".resultsBox");
+const gameRecap = document.querySelector(".gameRecap");
+
+
+function buttonSelection(button){
+}
 
 //Possible Choice 
 let RPS_opt = ["rock", "paper", "scissors"]
@@ -24,8 +40,11 @@ function getComputerChoice(){
 
 //log(getComputerChoice());
 
-//Human Choice:
+
+//Human Choice: staart the round when one of the button is clicked
 function getHumanChoice(){
+    
+
     let choice = prompt("Enter 'Rock', 'Paper' or 'Scissors'");
     choice = choice.toLowerCase();
 
@@ -37,34 +56,77 @@ function getHumanChoice(){
     return choice;
 }
 
+
 //log(getHumanChoice())
 
 //Round
-function playRound(human, computer){
-    let roundResult;
-
-    log("--------------------------------------------------");
-    log("Computer Choice:" + computer);
-    log("Human Choice:" + human); 
+function playRound(human){
+    let roundResult = "";
+    
+    const computer = getComputerChoice();
+    //log("--------------------------------------------------");
+    //log("Computer Choice:" + computer);
+    //log("Human Choice:" + human); 
     //Draw
     if (human === computer){
-        roundResult = "Match drawn!";
-        log(roundResult);
-
-        return roundResult;
+        roundResults = "Match drawn!";
+        log(roundResults);
+        drawn +=1 ;
+        return roundResults;
     }
     const key = `${human}-${computer}`;
-    roundResult = rules[key];
-    log(roundResult);
+    roundResults = rules[key];
+    log(roundResults);
 
-    return roundResult;
+    if(roundResults.startsWith("You Win")){
+            humanWin += 1;
+    }else{
+            computerWin += 1;
+    }
+
+    return roundResults;
 }
+
+
+//play a round
+buttons.forEach((button) => {
+    button.addEventListener("click", function(e){
+        const finalWinner = document.createElement("h1");
+        finalWinner.classList.add("finalWinner");
+
+        round += 1 ;
+        const text = e.target.textContent.toLowerCase()
+        let roundResults = playRound(text);
+        
+        const introContent = "Game Recap: " ;
+        const content = introContent + "User: " +
+            humanWin + ", " + "Computer: " + computerWin + ",  " +  "Drawn:" + drawn ;
+        log(content)
+        gameRecap.textContent = content;
+
+        const resultsDisplay = document.createElement("p");
+        resultsDisplay.classList.add("resultsDisplay");
+        resultsDisplay.textContent = "Round #"+ round + ": " + roundResults;
+        resultsBox.appendChild(resultsDisplay);
+
+        if(humanWin === 5){
+            buttonContainer.replaceChildren()
+            finalWinner.textContent = ("You win the game! \nCould you do it again? Refresh page!")
+            resultsBox.appendChild(finalWinner);
+        }
+        if(computerWin ===5){
+            buttonContainer.replaceChildren()
+            finalWinner.textContent = ("You lose the game! \nRefresh page and try again!")
+            resultsBox.appendChild(finalWinner);
+        }        
+
+    })
+
+});
 
 //Game
 function playFullGame(){
-    let humanWin = 0;
-    let computerWin = 0;
-    let drawn = 0 ;
+
 
     for (let i = 0; i < 5; i++) {
         const humanchoice = getHumanChoice();
@@ -90,4 +152,3 @@ function playFullGame(){
     return 0;
 }
 
-playFullGame();
